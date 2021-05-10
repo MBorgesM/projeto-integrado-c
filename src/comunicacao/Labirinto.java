@@ -1,5 +1,6 @@
 package comunicacao;
 
+import java.net.InetAddress;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -12,15 +13,18 @@ public class Labirinto {
 
     /**
      * Construtor padrão do Labirinto que será usado na comunicação entre cliente e servidor
-     * @param nome Nome do Labirinto que será salvo
-     * @param data Data da criação do labirinto
+     * @param nome Nome do Labirinto
      * @param labirinto Labirinto completo em formato de String
      * @param ip IP do criador do labirinto
+     * @throws Exception Se algum campo estiver vazio
      */
-    public Labirinto (String nome, String labirinto, String ip) {
+    public Labirinto (String nome, String labirinto, InetAddress ip) throws Exception {
+        if (nome == null || labirinto == null || ip == null) {
+            throw new Exception ("Todos os campos devem ser válidos");
+        }
         this.nome = nome;
         this.conteudo = labirinto;
-        this.criador = ip;
+        this.criador = ip.getHostAddress();
         setDataCriacao();
         this.dataUltimaModificacao = this.dataCriacao;
     }
@@ -45,7 +49,7 @@ public class Labirinto {
     }
 
     /**
-     * Setter da data de criação
+     * Setter da data de criação, restrito ao construtor
      */
     private void setDataCriacao() {
         DateTimeFormatter formatador = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
@@ -54,7 +58,7 @@ public class Labirinto {
     }
 
     /**
-     * Setter da data de modificação
+     * Setter da data de modificação, restrito a alterações dos outros atributos da Classe
      */
     private void setDataModificacao() {
         DateTimeFormatter formatador = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
@@ -102,15 +106,88 @@ public class Labirinto {
         return this.criador;
     }
 
+    /**
+     * Método obrigatório toString
+     */
+    @Override
     public String toString() {
         String ret = "";
 
-        ret += "Criador do Labirinto: " + this.criador + "\n" +
+        ret += "IP do Criador do Labirinto: " + this.criador + "\n" +
                "Nome do labirinto: " + this.nome + "\n" +
                "Data da criação do labirinto: " + this.dataCriacao + "\n" +
                "Data da última modificação do labirinto: " + this.dataUltimaModificacao + "\n" +
                "Labirinto: " + "\n" + this.conteudo + "\n";
 
+        return ret;
+    }
+
+    /**
+     * Método obrigatório equals
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+
+        if (obj == null) return false;
+
+        if (obj.getClass() != Labirinto.class) return false;
+
+        Labirinto lab = (Labirinto) obj;
+
+        if (!(this.nome.equals(lab.nome))) return false;
+        if (!(this.dataCriacao.equals(lab.dataCriacao))) return false;
+        if (!(this.dataUltimaModificacao.equals(lab.dataUltimaModificacao))) return false;
+        if (!(this.conteudo.equals(lab.conteudo))) return false;
+        if (!(this.criador.equals(lab.criador))) return false;
+
+        return true;
+    }
+
+    /**
+     * Método obrigatório hashCode
+     */
+    @Override
+    public int hashCode() {
+        int ret = 2000;
+
+        ret = 13*ret + this.nome.hashCode();
+        ret = 13*ret + this.dataCriacao.hashCode();
+        ret = 13*ret + this.dataUltimaModificacao.hashCode();
+        ret = 13*ret + this.conteudo.hashCode();
+        ret = 13*ret + this.criador.hashCode();
+
+        return ret;
+    }
+
+    /**
+     * Construtor de cópias da classe Labirinto
+     * @param modelo Labirinto que servirá de modelo para a cópia
+     * @throws Exception Se o modelo for nulo
+     */
+    public Labirinto (Labirinto modelo) throws Exception {
+        if (modelo == null) {
+            throw new Exception ("Modelo ausente");
+        }
+        
+        this.nome = modelo.nome;
+        this.dataCriacao = modelo.dataCriacao;
+        this.dataUltimaModificacao = modelo.dataUltimaModificacao;
+        this.conteudo = modelo.conteudo;
+        this.criador = modelo.criador;
+    }
+
+    /**
+     * Método obrigatório clone
+     */
+    public Object clone() {
+        Labirinto ret=null;
+        
+        try
+        {
+            ret = new Labirinto(this);
+        } catch (Exception erro) {}
+        
         return ret;
     }
 }
