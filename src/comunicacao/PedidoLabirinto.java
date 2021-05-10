@@ -2,7 +2,7 @@ package comunicacao;
 
 import java.net.InetAddress;
 
-public class PedidoLabirinto {
+public class PedidoLabirinto implements Cloneable {
     private String idCliente;
 
     /**
