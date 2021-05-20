@@ -8,21 +8,21 @@ import java.io.IOException;
 import entrega1.Pilha;
 
 public class FuncoesGUI {
-	GUI gui;                      //Objeto da Classe GUI, utilizado para alterar os atributos da janela 
-	String nomeArquivo = null;    //Nome do arquivo
-	String enderecoArquivo = null;       //Diret√≥rio do arquivo
-	String erro;                  //Mensagem de erro que √© retornada no Log
-	boolean novoLabirinto = true; //Verdadeiro se o labirinto foi criado atrav√©s da GUI, falso se foi aberto externamente
+	GUI gui;                      		 //Objeto da Classe GUI, utilizado para alterar os atributos da janela 
+	String nomeArquivo = null;    		 //Nome do arquivo
+	String enderecoArquivo = null;       //DiretÛrio do arquivo
+	String erro;                  		 //Mensagem de erro que È retornada no Log
+	boolean novoLabirinto = true; 		 //Verdadeiro se o labirinto foi criado atravÈs da GUI, falso se foi aberto externamente
     int nLinhas;
     int nColunas = 0;
     int lEntrada = -1;
     int cEntrada = -1;
     int lSaida = -1;
     int cSaida = -1;
-    //Todos os inteiros s√£o utilizados para resolver o labirinto
+    //Todos os inteiros s„o utilizados para resolver o labirinto
 	
     /**
-     * Construtor padr√£o
+     * Construtor padr„o
      * @param gui Objeto da Classe GUI que possui todos os atributos da janela
      */
 	public FuncoesGUI(GUI gui) {
@@ -30,7 +30,7 @@ public class FuncoesGUI {
 	}
 	
 	/**
-	 * Evento do bot√£o "Novo", limpa a janela e as vari√°veis de endere√ßos
+	 * Evento do bot„o "Novo", limpa a janela e as vari·veis de endereÁos
 	 */
 	public void novoLabirinto() {
 		novoLabirinto = true;
@@ -48,7 +48,7 @@ public class FuncoesGUI {
 	}
 	
 	/**
-	 * Evento do bot√£o "Editar", abre uma janela para que o usu√°rio possa abrir um arquivo .txt e inserir seu conte√∫do no editor
+	 * Evento do bot√£o "Editar", abre uma janela para que o usu·rio possa abrir um arquivo .txt e inserir seu conte˙do no editor
 	 */
 	public void editarLabirinto() {
 		FileDialog fd = new FileDialog(gui.janela, "Editar", FileDialog.LOAD);
@@ -81,14 +81,14 @@ public class FuncoesGUI {
 				}
 				leitor.close();
 			} catch(Exception e) {
-				gui.console.append("Arquivo inv√°lido\n");
+				gui.console.append("Arquivo inv·lido\n");
 			}
 		} 
 	}
 	
 	/**
-	 * Evento do bot√£o "Resolver"
-	 * @throws IOException Caso n√£o seja encontrado o arquivo
+	 * Evento do bot„o "Resolver"
+	 * @throws IOException Caso n„o seja encontrado o arquivo
 	 */
 	public void resolverLabirinto() throws IOException {
 		nLinhas = gui.editor.getLineCount();
@@ -128,7 +128,7 @@ public class FuncoesGUI {
 	    
 	    gui.editor.setText("");
 	    
-	    //Se o labirinto foi aberto externamente, uma linha ser√° descontada por conta da primeira linha com a quantidade de linhas do labirinto
+	    //Se o labirinto foi aberto externamente, uma linha ser· descontada por conta da primeira linha com a quantidade de linhas do labirinto
 	    if (novoLabirinto) {
 	    	for (i = 0; i < nLinhas; i++) {
 		        for (int j = 0; j < nColunas; j++) {
@@ -156,8 +156,8 @@ public class FuncoesGUI {
 	}
 
 	/**
-	 * Evento do bot√£o "Salvar", abre uma janela para que o usu√°rio possa salvar um labirinto v√°lido em um arquivo .txt
-	 * @throws IOException Caso n√£o seja encontrado o arquivo
+	 * Evento do bot„o "Salvar", abre uma janela para que o usu·rio possa salvar um labirinto v·lido em um arquivo .txt
+	 * @throws IOException Caso n„o seja encontrado o arquivo
 	 */
 	public void salvarLabirinto() throws IOException {
 		nLinhas = gui.editor.getLineCount();
@@ -202,14 +202,14 @@ public class FuncoesGUI {
 		try {
 			FileWriter fw;
 			
-			//Insere a extens√£o correta no final do arquivo
+			//Insere a extens„o correta no final do arquivo
 			if (nomeArquivo.endsWith(".txt")) {
 				fw = new FileWriter(enderecoArquivo + nomeArquivo);
 			} else {
 				fw = new FileWriter(enderecoArquivo + nomeArquivo + ".txt");
 			}
 			
-			//Insere o n√∫mero de linhas do labirinto na primeira linha
+			//Insere o n˙mero de linhas do labirinto na primeira linha
 			if (novoLabirinto) {
 				fw.write(nLinhas + "\n" + gui.editor.getText());
 			} else {
@@ -223,9 +223,9 @@ public class FuncoesGUI {
 	}
 	
 	/**
-	 * Verifica se o labirinto est√° condizente com as regras do sistema
+	 * Verifica se o labirinto est· condizente com as regras do sistema
 	 * @param matriz Matriz que armazena todos os caracteres do labirinto
-	 * @return True se o labirinto est√° correto, sen√£o retorna false
+	 * @return True se o labirinto est· correto, sen„o retorna false
 	 */
 	public boolean validaLabirinto(char[][] matriz) {
 		nLinhas = gui.editor.getLineCount();
@@ -233,7 +233,7 @@ public class FuncoesGUI {
 		for (String linha : gui.editor.getText().split("\\n")) {
 			char[] c = new char[linha.length()];
 			if (linha.length() != nColunas) {
-	        	erro = "Todas as linhas devem possuir o mesmo n√∫mero de colunas";
+	        	erro = "Todas as linhas devem possuir o mesmo n˙mero de colunas";
 	        	return false;
 	        }
 			c = linha.toCharArray();
@@ -242,7 +242,7 @@ public class FuncoesGUI {
 		        	c[j] != 'E' &&
 		        	c[j] != 'S' &&
 		        	c[j] != ' ') {
-		        	erro = "Caractere \"" + c[j] + "\" inv√°lido";
+		        	erro = "Caractere \"" + c[j] + "\" inv·lido";
 		        	return false;
 		        }
 			}
@@ -252,14 +252,14 @@ public class FuncoesGUI {
 		    cEntrada == -1 ||
 		    lSaida == -1 ||
 		    cSaida == -1) {
-		    erro = "O labirinto precisa conter uma entrada e uma sa√≠da v√°lida";
+		    erro = "O labirinto precisa conter uma entrada e uma saÌda v·lida";
 	    	return false;
 		}
 		return true;
 	}
 	
 	/**
-	 * Modo progressivo do algoritmo de resolu√ß√£o de labirintos
+	 * Modo progressivo do algoritmo de resoluÁ„o de labirintos
 	 * @param matriz Matriz que armazena todos os caracteres do labirinto
 	 * @param caminho
 	 * @param possibilidades
@@ -310,7 +310,7 @@ public class FuncoesGUI {
 	}
 
 	/**
-	 * Modo regressivo do algoritmo de resolu√ß√£o de labirintos
+	 * Modo regressivo do algoritmo de resoluÁ„o de labirintos
 	 * @param matriz
 	 * @param caminho
 	 * @param possibilidades
@@ -348,7 +348,7 @@ public class FuncoesGUI {
 	 * @param matriz
 	 * @param lAtual
 	 * @param cAtual
-	 * @return true se a sa√≠da est√° adjacente ao caminho percorrido, sen√£o retorna false
+	 * @return true se a saÌda est· adjacente ao caminho percorrido, sen„o retorna false
 	 */
 	private boolean saida(char[][] matriz, int lAtual, int cAtual) {
 		if (matriz[lAtual][cAtual + 1] == 'S' || 
@@ -363,7 +363,7 @@ public class FuncoesGUI {
 	}
 
 	/**
-	 * Verifica quais os caminhos dispon√≠veis para serem percorridos
+	 * Verifica quais os caminhos disponÌveis para serem percorridos
 	 * @param matriz
 	 * @param lAtual
 	 * @param cAtual

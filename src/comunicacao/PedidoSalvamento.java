@@ -1,20 +1,21 @@
 package comunicacao;
 
+import java.io.Serializable;
 import java.net.InetAddress;
 
-public class PedidoSalvamento implements Cloneable {
+public class PedidoSalvamento extends Comunicado {
     private String idCliente;
     private Labirinto labirinto;
 
     /**
-     * Construtor padr√£o da classe PedidoSalvamento
+     * Construtor padr„o da classe PedidoSalvamento
      * @param idCliente IP do cliente
-     * @param labirinto Labirinto que ser√° salvo
+     * @param labirinto Labirinto que ser· salvo
      * @throws Exception Se o IP ou o labirinto forem nulos
      */
     public PedidoSalvamento(InetAddress idCliente, Labirinto labirinto) throws Exception {
         if (idCliente == null || labirinto == null) {
-            throw new Exception ("IP inv√°lido");
+            throw new Exception ("IP inv·lido");
         }
         this.idCliente = idCliente.getHostAddress();
         this.labirinto = labirinto;
@@ -37,7 +38,7 @@ public class PedidoSalvamento implements Cloneable {
     }
 
     /**
-     * M√©todo obrigat√≥rio toString
+     * MÈtodo obrigatÛrio toString
      */
     @Override
     public String toString() {
@@ -49,7 +50,7 @@ public class PedidoSalvamento implements Cloneable {
     }
 
     /**
-     * M√©todo obrigat√≥rio equals
+     * MÈtodo obrigatÛrio equals
      */
     @Override
     public boolean equals(Object obj) {
@@ -68,7 +69,7 @@ public class PedidoSalvamento implements Cloneable {
     }
 
     /**
-     * M√©todo obrigat√≥rio hashCode
+     * MÈtodo obrigatÛrio hashCode
      */
     @Override
     public int hashCode() {
@@ -81,8 +82,8 @@ public class PedidoSalvamento implements Cloneable {
     }
 
     /**
-     * Construtor de c√≥pias da classe PedidoSalvamento
-     * @param modelo PedidoSalvamento que servir√° de modelo para a c√≥pia
+     * Construtor de cÛpias da classe PedidoSalvamento
+     * @param modelo PedidoSalvamento que servir· de modelo para a cÛpia
      * @throws Exception Se o modelo for nulo
      */
     public PedidoSalvamento(PedidoSalvamento modelo) throws Exception {
@@ -95,7 +96,7 @@ public class PedidoSalvamento implements Cloneable {
     }
 
     /**
-     * M√©todo obrigat√≥rio clone
+     * MÈtodo obrigatÛrio clone
      */
     public Object clone() {
         PedidoSalvamento ret=null;

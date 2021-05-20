@@ -8,7 +8,7 @@ public class Programa {
 		Scanner teclado = new Scanner(System.in);
 		String arquivo;
 		
-		System.out.printf("Insira o endere√ßo completo do arquivo: ");
+		System.out.printf("Insira o endereÁo completo do arquivo: ");
 		arquivo = teclado.nextLine();
 		teclado.close();
 		
@@ -16,7 +16,7 @@ public class Programa {
 			Labirinto labirinto = new Labirinto(arquivo);
 			labirinto.executaLabirinto();
 		} catch (FileNotFoundException e) {
-			System.out.println("Arquivo n√£o existe");
+			System.out.println("Arquivo n„o existe");
 		}
 	}
 }
