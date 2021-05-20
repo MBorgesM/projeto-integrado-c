@@ -6,7 +6,7 @@ public class Pilha<X> {
 	private int ultimo;
 	private static final String ERRO1 = "Pilha Vazia";
 	
-	/** Construtor padr√£o.
+	/** Construtor padr„o.
 	 * 
 	 * @param nLinhas conta a quantidade de linhas
 	 * @param nColunas conta a quantidade de colunas
@@ -17,11 +17,11 @@ public class Pilha<X> {
 		this.ultimo = -1;
 	}
 
-	/** Respons√°vel pela incrementa√ß√£o de elementos no topo da pilha.
+	/** Respons·vel pela incrementaÁ„o de elementos no topo da pilha.
 	 * 
 	 * @param x parametro para que guarda a coordenada no eixo x.
 	 * @param y parameto que guarda a coordenada no eixo y.
-	 * @throws Exception Lan√ßa exce√ß√£o.
+	 * @throws Exception LanÁa exceÁ„o.
 	 */
 	public void push(X x, X y) throws Exception {
 		if (x == null) {
@@ -39,10 +39,10 @@ public class Pilha<X> {
 		this.coordenadas[this.ultimo][1] = y;
 	}
 
-	/** Retorna o que est√° guardado no topo da pilha na posi√ß√£o X.
+	/** Retorna o que est· guardado no topo da pilha na posiÁ„o X.
 	 * 
-	 * @return O valor do √∫ltimo elemento da pilha na posi√ß√£o X.
-	 * @throws Exception lan√ßa exce√ß√£o.
+	 * @return O valor do ˙ltimo elemento da pilha na posiÁ„o X.
+	 * @throws Exception lanÁa exceÁ„o.
 	 */
 	@SuppressWarnings("unchecked")
 	public X topX() throws Exception {
@@ -53,10 +53,10 @@ public class Pilha<X> {
 		return (X)this.coordenadas[this.ultimo][0];
 	}
 
-	/** Retorna o que est√° guardado no topo da pilha na posi√ß√£o Y.
+	/** Retorna o que est· guardado no topo da pilha na posiÁ„o Y.
 	 * 
-	 * @return O valor do √∫ltimo elemento da pilha na posi√ß√£o Y.
-	 * @throws Exception lan√ßa exce√ß√£o.
+	 * @return O valor do ˙ltimo elemento da pilha na posiÁ„o Y.
+	 * @throws Exception lanÁa exceÁ„o.
 	 */
 	@SuppressWarnings("unchecked")
 	public X topY() throws Exception {
@@ -67,9 +67,9 @@ public class Pilha<X> {
 		return (X)this.coordenadas[this.ultimo][1];
 	}
 
-	/** Tem a fun√ß√£o de remover o elemento que est√° no topo da pilha.
+	/** Tem a funÁ„o de remover o elemento que est· no topo da pilha.
 	 * 
-	 * @throws Exception lan√ßa exce√ß√£o.
+	 * @throws Exception lanÁa exceÁ„o.
 	 */
 	public void pop() throws Exception {
 		if (isVazia()) {
@@ -79,9 +79,9 @@ public class Pilha<X> {
 		this.ultimo--;
 	}
 
-	/** Respons√°vel por limpar o que tem guardado em pilha.
+	/** Respons·vel por limpar o que tem guardado em pilha.
 	 * 
-	 * @throws Exception lan√ßa exce√ß√£o.
+	 * @throws Exception lanÁa exceÁ„o.
 	 */
 	public void clear() throws Exception {
 		if (isVazia()) {
@@ -94,16 +94,16 @@ public class Pilha<X> {
 		}
 	}
 
-	/** Verifica se a pilha est√° vazia.
+	/** Verifica se a pilha est· vazia.
 	 * 
-	 * @return true se a pilha est√° vazia, se n√£o, false
+	 * @return true se a pilha est· vazia, se n„o, false
 	 */
 	public boolean isVazia() {
 		return this.ultimo == -1;
 	}
 	
 	/**
-	 * Respons√°vel por imprimir o que tem guardado na Pilha na tela.
+	 * Respons·vel por imprimir o que tem guardado na Pilha na tela.
 	 */
 	@Override
 	public String toString() {
@@ -126,7 +126,7 @@ public class Pilha<X> {
 	}
 	
 	/*
-	 * Verifica se duas pilhas s√£o iguais
+	 * Verifica se duas pilhas s„o iguais
 	 */
 	@Override
 	public boolean equals(Object obj) {

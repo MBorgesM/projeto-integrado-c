@@ -16,8 +16,8 @@ public class Labirinto {
     
     /**
      * Construtor da classe labirinto
-     * @param arquivo EndereÃ§o do arquivo txt onde o labirinto estÃ¡ armazenado
-     * @throws FileNotFoundException Caso o endereÃ§o passado nÃ£o exista
+     * @param arquivo Endereço do arquivo txt onde o labirinto está armazenado
+     * @throws FileNotFoundException Caso o endereço passado não exista
      */
     public Labirinto(String arquivo) throws FileNotFoundException {
     	this.nColunas = 0;
@@ -44,7 +44,7 @@ public class Labirinto {
 	    	    matriz = new char[nLinhas][nColunas];
 	        }
 	        if (linha.length() != nColunas) {
-	        	System.out.println("Numero inconsistente de colunas, encerrando execucao...");
+	        	System.out.println("Numero inconsistente de colunas, encerrando execução...");
 	        	System.exit(1);
 	        }
 	        char[] c = linha.toCharArray();
@@ -53,7 +53,7 @@ public class Labirinto {
 	        		c[j] != 'E' &&
 	        		c[j] != 'S' &&
 	        		c[j] != ' ') {
-	        		System.out.println("Caractere invalido, encerrando execucao...");
+	        		System.out.println("Caractere inválido, encerrando execução...");
 	        		System.exit(1);
 	        	}
 	        	if (c[j] == 'E') {
@@ -68,12 +68,12 @@ public class Labirinto {
 	    }
 	    reader.close();
 	    
-	    //Validacao da entrada e saida do labirinto
+	    //Validacao da entrada e saída do labirinto
 	    if (lEntrada == -1 ||
 	    	cEntrada == -1 ||
 	    	lSaida == -1 ||
 	    	cSaida == -1) {
-	    	System.out.println("O labirinto precisa conter uma entrada e uma saida valida");
+	    	System.out.println("O labirinto precisa conter uma entrada e uma saída válida");
     		System.exit(1);
 	    }
 	}
@@ -94,15 +94,15 @@ public class Labirinto {
 	}
 	
 	/**
-	 * Modo progressivo do algoritmo de resoluÃ§Ã£o de labirintos
+	 * Modo progressivo do algoritmo de resolução de labirintos
 	 * @param matriz Matriz que armazena todos os caracteres do labirinto
-	 * @param lEntrada PosiÃ§Ã£o no eixo X da entrada
-	 * @param cEntrada PosiÃ§Ã£o no eixo Y da entrada
-	 * @param nLinhas NÃºmero de linhas do labirinto
-	 * @param nColunas NÃºmero de colunas do labirinto
+	 * @param lEntrada Posição no eixo X da entrada
+	 * @param cEntrada Posição no eixo Y da entrada
+	 * @param nLinhas Número de linhas do labirinto
+	 * @param nColunas Número de colunas do labirinto
 	 * @param caminho Pilha que armazena todas as coordenadas percorridas
-	 * @param possibilidades Pilha que armazena todas as coordenadas que possuem caminhos mas nÃ£o forma seguidas
-	 * @param adjacentes Pilha que armazena todos os possÃ­veis caminhos
+	 * @param possibilidades Pilha que armazena todas as coordenadas que possuem caminhos mas não forma seguidas
+	 * @param adjacentes Pilha que armazena todos os possíveis caminhos
 	 */
 	private void encontraCaminho(int lEntrada, int cEntrada, int nLinhas, int nColunas, Pilha<Integer> caminho, Pilha<Integer> possibilidades, Pilha<Integer> adjacentes) {
 		int lAtual = lEntrada;
@@ -134,7 +134,7 @@ public class Labirinto {
 					qtdAdjacentes = 0;
 				} 
 			}
-			//Verifica se o programa ja chegou ao fim do labirinto
+			//Verifica se o programa já chegou ao fim do labirinto
 			//Modo regressivo
 			if(!verificador) {
 				regressivo(matriz, caminho, possibilidades);
@@ -151,14 +151,14 @@ public class Labirinto {
 	}
 	
 	/**
-	 * Verifica quais os caminhos disponÃ­veis para serem percorridos
+	 * Verifica quais os caminhos disponíveis para serem percorridos
 	 * @param matriz Matriz que armazena todos os caracteres do labirinto
 	 * @param lAtual Linha atual
 	 * @param cAtual Coluna atual
-	 * @param nLinhas NÃºmero de linhas do labirinto
-	 * @param nColunas NÃºmero de colunas do labirinto
-	 * @param adjacentes Quantidade de caminhos disponÃ­veis para serem percorridos
-	 * @return qtdAdjacentes Quantidade de caminhos disponÃ­veis para serem percorridos
+	 * @param nLinhas Número de linhas do labirinto
+	 * @param nColunas Número de colunas do labirinto
+	 * @param adjacentes Quantidade de caminhos disponíveis para serem percorridos
+	 * @return qtdAdjacentes Quantidade de caminhos disponíveis para serem percorridos
 	 */
 	private int existeAdjacentes(char[][] matriz, int lAtual, int cAtual, int nLinhas, int nColunas, Pilha<Integer> adjacentes) {
 		int qtdAdjacentes = 0;
@@ -242,7 +242,7 @@ public class Labirinto {
 	 * @param matriz Matriz que armazena todos os caracteres do labirinto
 	 * @param lAtual Linha atual
 	 * @param cAtual Coluna atual
-	 * @return True se a saÃ­da estÃ¡ adjacente ao caminho percorrido, senÃ£o retorna false
+	 * @return True se a saída está adjacente ao caminho percorrido, senão retorna false
 	 */
 	private boolean saida(char[][] matriz, int lAtual, int cAtual) {
 		if (matriz[lAtual][cAtual + 1] == 'S' || 
@@ -260,7 +260,7 @@ public class Labirinto {
 	 * Implementa o modo regressivo
 	 * @param matriz Matriz que armazena todos os caracteres do labirinto
 	 * @param caminho Pilha que armazena todas as coordenadas percorridas
-	 * @param possibilidades Pilha que armazena todas as coordenadas que possuem caminhos mas nÃ£o forma seguidas
+	 * @param possibilidades Pilha que armazena todas as coordenadas que possuem caminhos mas não forma seguidas
 	 */
 	private void regressivo(char[][] matriz, Pilha<Integer> caminho, Pilha<Integer> possibilidades) {
 		int metaX;

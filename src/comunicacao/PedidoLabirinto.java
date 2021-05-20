@@ -1,18 +1,19 @@
 package comunicacao;
 
+import java.io.Serializable;
 import java.net.InetAddress;
 
-public class PedidoLabirinto implements Cloneable {
+public class PedidoLabirinto extends Comunicado {
     private String idCliente;
 
     /**
-     * Construtor padr√£o da classe PedidoLabirinto
+     * Construtor padr„o da classe PedidoLabirinto
      * @param ip IP do Cliente
      * @throws Exception Se o ip estiver vazio
      */
     public PedidoLabirinto(InetAddress ip) throws Exception{
         if (ip == null) {
-            throw new Exception ("IP inv√°lido");
+            throw new Exception ("IP inv·lido");
         }
         this.idCliente = ip.getHostAddress();
     }
@@ -26,7 +27,7 @@ public class PedidoLabirinto implements Cloneable {
     }
 
     /**
-     * M√©todo obrigat√≥rio toString
+     * MÈtodo obrigatÛrio toString
      */
     @Override
     public String toString() {
@@ -34,7 +35,7 @@ public class PedidoLabirinto implements Cloneable {
     }
 
     /**
-     * M√©todo obrigat√≥rio equals
+     * MÈtodo obrigatÛrio equals
      */
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -51,7 +52,7 @@ public class PedidoLabirinto implements Cloneable {
     }
 
     /**
-     * M√©todo obrigat√≥rio hashCode
+     * MÈtodo obrigatÛrio hashCode
      */
     @Override
     public int hashCode() {
@@ -63,8 +64,8 @@ public class PedidoLabirinto implements Cloneable {
     }
 
     /**
-     * Construtor de c√≥pias da classe PedidoLabirinto
-     * @param modelo PedidoLabirinto que servir√° de modelo para a c√≥pia
+     * Construtor de cÛpias da classe PedidoLabirinto
+     * @param modelo PedidoLabirinto que servir· de modelo para a cÛpia
      * @throws Exception Se o modelo for nulo
      */
     public PedidoLabirinto(PedidoLabirinto modelo) throws Exception {
@@ -75,7 +76,7 @@ public class PedidoLabirinto implements Cloneable {
     }
 
     /**
-     * M√©todo obrigat√≥rio clone
+     * MÈtodo obrigatÛrio clone
      */
     public Object clone() {
         PedidoLabirinto ret=null;

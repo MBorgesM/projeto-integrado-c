@@ -28,7 +28,7 @@ public class GUI implements ActionListener {
 	}
 	
 	/**
-	 * Construtor padr√£o da interface gr√°fica
+	 * Construtor padr„o da interface gr·fica
 	 */
 	public GUI() {
 		
@@ -41,7 +41,7 @@ public class GUI implements ActionListener {
 	}
 	
 	/**
-	 * Cria a janela que ser√° exibida na execu√ß√£o do programa
+	 * Cria a janela que ser· exibida na execuÁ„o do programa
 	 */
 	public void criaJanela() {
 		janela = new JFrame("Editor de Labirintos");
@@ -53,28 +53,28 @@ public class GUI implements ActionListener {
 	}
 	
 	/**
-	 * Cria a √°rea de edi√ß√£o dos labirintos
+	 * Cria a ·rea de ediÁ„o dos labirintos
 	 */
 	public void criaEditor() {
 		editor = new JTextArea();
 		
-		//Altera a fonte padr√£o da janela para melhorar a visibilidade do labirinto
+		//Altera a fonte padr„o da janela para melhorar a visibilidade do labirinto
 		Font font = new Font("Courier New", Font.PLAIN, 16);
 		editor.setFont(font);
 		
-		//Cria e adiciona um Scroll din√¢mico para melhorar a visibilidade da janela
+		//Cria e adiciona um Scroll din‚mico para melhorar a visibilidade da janela
 		scrollEditor = new JScrollPane(editor, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 										 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		janela.add(scrollEditor);
 	}
 	
 	/**
-	 * Cria a √°rea de Log e a insere na parte inferior da janela
+	 * Cria a ·rea de Log e a insere na parte inferior da janela
 	 */
 	public void criaConsole() {
 		console = new JTextArea(8, 200);
 		
-		console.setEditable(false); //Impede o usu√°rio de digitar no Log
+		console.setEditable(false); //Impede o usu·rio de digitar no Log
         console.setText("======================================="
         		+ "=================================================="
         		+ "=================================================="
@@ -89,7 +89,7 @@ public class GUI implements ActionListener {
 	}
 	
 	/**
-	 * Cria os bot√µes de fun√ß√µes e insere-os na parte superior da janela
+	 * Cria os botıes de funÁıes e insere-os na parte superior da janela
 	 */
 	public void criaMenu() {
 		String texto[] = {"Novo", "Editar", "Resolver", "Salvar" };
@@ -106,7 +106,7 @@ public class GUI implements ActionListener {
 	}
 
 	/**
-	 * Executa as fun√ß√µes baseando-se no bot√£o pressionado
+	 * Executa as funÁıes baseando-se no bot„o pressionado
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -123,7 +123,7 @@ public class GUI implements ActionListener {
 				try {
 					funcoes.resolverLabirinto();
 				} catch (Exception f) {
-					this.console.append("Labirinto inv√°lido" + "\n");
+					this.console.append("Labirinto inv·lido" + "\n");
 				}
 				break;
 			case "Salvar": 
