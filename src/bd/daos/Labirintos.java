@@ -12,7 +12,7 @@ public class Labirintos {
 	 * @return true se o labirinto existe, senão false
 	 * @throws Exception Se houver algum erro na busca do labirinto
 	 */
-    public static boolean buscar (String nomeArquivo) throws Exception {
+    private static boolean buscar (String nomeArquivo) throws Exception {
         boolean ret = false;
 
         try {
@@ -73,7 +73,7 @@ public class Labirintos {
      * @param labirinto
      * @throws Exception
      */
-    public static void atualizar(Labirinto labirinto) throws Exception {
+    private static void atualizar(Labirinto labirinto) throws Exception {
     	if (!buscar(labirinto.getNome())) {
     		throw new Exception ("Esse labirinto não existe");
     	}
@@ -102,19 +102,21 @@ public class Labirintos {
         }
     }
     
-    public static String recuperar(String nome) throws Exception {
+    public static String recuperar(String nome, String criador) throws Exception {
     	String ret = "";
     	try {
             String sql = "SELECT * " +
                          "FROM Labirintos " +
-                         "WHERE Nome = ?";
+                         "WHERE Nome = ? " +
+                         "AND Criador = ?";
 
             BDSQLServer.COMANDO.prepareStatement(sql);
             BDSQLServer.COMANDO.setString(1, nome);
+            BDSQLServer.COMANDO.setString(2, criador);
             MeuResultSet resultado = (MeuResultSet)BDSQLServer.COMANDO.executeQuery();
             
             if (resultado.first()) {
-            	ret = resultado.getString("Conteudo");	
+            	ret = resultado.getString("Conteudo");
             }
         } catch (SQLException e) {
             throw new Exception (e.getMessage());
@@ -123,7 +125,8 @@ public class Labirintos {
     	return ret;
     }
     
-    public static void listar(String criador) throws Exception {
+    public static String listar(String criador) throws Exception {
+    	String ret = "";
     	try {
     		String sql = "SELECT * " +
                     "FROM Labirintos " +
@@ -134,21 +137,25 @@ public class Labirintos {
             MeuResultSet resultado = (MeuResultSet)BDSQLServer.COMANDO.executeQuery();
             
             while (resultado.next()) {
-            	System.out.println(resultado.getString("Nome"));
+            	ret += resultado.getString("Nome") + "\n";
             }
     	} catch (SQLException e) {
             throw new Exception (e.getMessage());
         }
+    	
+    	return ret;
     }
     
-    public static void deletar(String nome) throws Exception {
+    public static void deletar(String nome, String email) throws Exception {
     	try {
     		String sql = "DELETE " +
                     "FROM Labirintos " +
-                    "WHERE Nome = ?";
+                    "WHERE Nome = ? " +
+                    "AND Criador = ?";
     		
     		BDSQLServer.COMANDO.prepareStatement(sql);
             BDSQLServer.COMANDO.setString(1, nome);
+            BDSQLServer.COMANDO.setString(2, email);
             BDSQLServer.COMANDO.executeUpdate ();
             BDSQLServer.COMANDO.commit        ();
             System.out.println("Labirinto deletado com sucesso!");

@@ -19,7 +19,7 @@ public class GUI implements ActionListener {
 	public JTextArea console;
 	public JScrollPane scrollEditor;
 	public JScrollPane scrollConsole;
-	public JButton botao[] = new JButton[4];
+	public JButton botao[] = new JButton[8];
 	public JPanel botoes = new JPanel((LayoutManager) new FlowLayout(FlowLayout.LEFT)); 
 	FuncoesGUI funcoes = new FuncoesGUI(this);
 	
@@ -38,6 +38,12 @@ public class GUI implements ActionListener {
 		criaMenu();
 		
 		janela.setVisible(true);
+		
+		try {
+			funcoes.iniciaConexao();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	/**
@@ -48,7 +54,7 @@ public class GUI implements ActionListener {
 		
 		//Define o tamanho e formato da janela
 		janela.getContentPane().setLayout(new BorderLayout());
-		janela.setSize(800, 600);
+		janela.setSize(850, 600);
 		janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
@@ -92,7 +98,7 @@ public class GUI implements ActionListener {
 	 * Cria os botões de funções e insere-os na parte superior da janela
 	 */
 	public void criaMenu() {
-		String texto[] = {"Novo", "Editar", "Resolver", "Salvar" };
+		String texto[] = {"Novo", "Editar local", "Editar online", "Resolver", "Salvar", "Cadastrar email", "Meus Labirintos", "Limpar console"};
 		
 		//Adiciona o texto e os eventos para cada botÃ£o
 		for (int i=0; i<this.botao.length; i++) {
@@ -116,8 +122,11 @@ public class GUI implements ActionListener {
 			case "Novo":
 				funcoes.novoLabirinto();
 				break;
-			case "Editar":
-				funcoes.editarLabirinto();
+			case "Editar local":
+				funcoes.editarLabirintoLocal();
+				break;
+			case "Editar online":
+				funcoes.editarLabirintoOnline();
 				break;
 			case "Resolver":
 				try {
@@ -132,6 +141,24 @@ public class GUI implements ActionListener {
 				} catch (Exception f) {
 					this.console.append(f.getMessage() + "\n");
 				}
+				break;
+			case "Cadastrar email":
+				try {
+					funcoes.cadastraEmail();
+				} catch (Exception f) {
+					this.console.append(f.getMessage() + "\n");
+				}
+				break;
+			case "Meus Labirintos":
+				funcoes.listaLabirintos();
+				break;
+			case "Limpar console":
+				this.console.setText("======================================="
+		        		+ "=================================================="
+		        		+ "=================================================="
+		        		+ "=================================================="
+		        		+ "=================================================="
+		        		+ "======================================\nLog:\n");
 				break;
 		}
 	}

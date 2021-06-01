@@ -5,6 +5,11 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import comunicacao.*;
+import cliente.*;
 import entrega1.Pilha;
 
 public class FuncoesGUI {
@@ -12,14 +17,21 @@ public class FuncoesGUI {
 	String nomeArquivo = null;    		 //Nome do arquivo
 	String enderecoArquivo = null;       //Diretório do arquivo
 	String erro;                  		 //Mensagem de erro que é retornada no Log
+	String emailUsuario;				 //Email do usuário, será utilizado para salvar os labirintos no banco de dados
 	boolean novoLabirinto = true; 		 //Verdadeiro se o labirinto foi criado através da GUI, falso se foi aberto externamente
+	//Todos os inteiros são utilizados para resolver o labirinto
     int nLinhas;
     int nColunas = 0;
     int lEntrada = -1;
     int cEntrada = -1;
     int lSaida = -1;
     int cSaida = -1;
-    //Todos os inteiros são utilizados para resolver o labirinto
+    public static final String HOST_PADRAO = "localhost";
+	public static final int PORTA_PADRAO = 3000;
+	Socket conexao = null;
+	ObjectOutputStream transmissor = null;
+	ObjectInputStream receptor = null;
+	Parceiro servidor = null;
 	
     /**
      * Construtor padrão
@@ -27,6 +39,41 @@ public class FuncoesGUI {
      */
 	public FuncoesGUI(GUI gui) {
 		this.gui = gui;
+	}
+	
+	/**
+	 * Inicia a conexão com o servidor
+	 * @throws Exception Se a porta e o host não forem os mesmos do servidor
+	 */
+	public void iniciaConexao() throws Exception {
+		try {
+			String host = Cliente.HOST_PADRAO;
+			int porta = Cliente.PORTA_PADRAO;
+			
+			this.conexao = new Socket(host, porta);
+		} catch (Exception erro) {
+			throw new Exception(erro.getMessage());
+		}
+		
+		try {
+			this.transmissor = new ObjectOutputStream(conexao.getOutputStream());
+		} catch (Exception erro) {
+			throw new Exception(erro.getMessage());
+		}
+		
+		try {
+			this.receptor = new ObjectInputStream(conexao.getInputStream());
+		} catch (Exception erro) {
+			throw new Exception(erro.getMessage());
+		}
+		
+		try {
+			this.servidor = new Parceiro(conexao, receptor, transmissor);
+		} catch (Exception erro) {
+			throw new Exception (erro.getMessage());
+		}
+		
+		gui.console.append("Conectado\n");
 	}
 	
 	/**
@@ -50,7 +97,7 @@ public class FuncoesGUI {
 	/**
 	 * Evento do botÃ£o "Editar", abre uma janela para que o usuário possa abrir um arquivo .txt e inserir seu conteúdo no editor
 	 */
-	public void editarLabirinto() {
+	public void editarLabirintoLocal() {
 		FileDialog fd = new FileDialog(gui.janela, "Editar", FileDialog.LOAD);
 		fd.setFile("*.txt");
 		fd.setVisible(true);
@@ -84,6 +131,39 @@ public class FuncoesGUI {
 				gui.console.append("Arquivo inválido\n");
 			}
 		} 
+	}
+	
+	/**
+	 * Evento do botão "Editar Online", resgata o conteúdo salvo no banco de dados
+	 */
+	public void editarLabirintoOnline() {
+		if (this.emailUsuario == null) {
+			gui.console.append("Cadastre um email antes de tentar editar labirintos do banco de dados\n");
+			return;
+		}
+		
+		String nomeLabirinto = gui.editor.getText();
+		
+		if (nomeLabirinto.length() == 0) {
+			gui.console.append("Insira o nome exato do labirinto que você quer editar\n");
+			return;
+		}
+		
+		try {
+			PedidoLabirinto pedidoLabirinto = new PedidoLabirinto(this.emailUsuario, nomeLabirinto);
+			
+			this.servidor.receba(pedidoLabirinto);
+			
+			Resultado retorno = (Resultado) this.servidor.envie();
+			String labirinto = retorno.getRetorno();
+			if (labirinto == null) {
+				gui.console.append("Insira o nome exato do labirinto que você quer editar\n");
+			} else {
+				gui.editor.setText(retorno.getRetorno());
+			}
+		} catch (Exception erro) {
+			erro.printStackTrace();
+		}
 	}
 	
 	/**
@@ -150,7 +230,7 @@ public class FuncoesGUI {
 				gui.console.append(caminho.topX() + ", " + caminho.topY() + "\n");
 				caminho.pop();
 			} catch (Exception e) {
-				gui.console.append(e.getMessage());
+				gui.console.append(e.getMessage() + "\n");
 			}
 	    }
 	}
@@ -217,8 +297,28 @@ public class FuncoesGUI {
 			}
 			
 			fw.close();
+			salvarLabirintoOnline();
 		} catch(Exception e) {
 			System.err.println(e.getMessage());
+		}
+	}
+	
+	private void salvarLabirintoOnline() {
+		String labirintoTexto = gui.editor.getText();
+		if (this.nomeArquivo.endsWith(".txt")) {
+			this.nomeArquivo = this.nomeArquivo.substring(0, this.nomeArquivo.length() - 4);
+		}
+		
+		try {
+			Labirinto labirinto = new Labirinto(this.nomeArquivo, this.emailUsuario, labirintoTexto);
+			
+			PedidoSalvamento pedidoSalvamento = new PedidoSalvamento(this.emailUsuario, labirinto);
+			System.out.println(pedidoSalvamento);
+			
+			this.servidor.receba(pedidoSalvamento);
+		} catch (Exception e) {
+			e.printStackTrace();
+			gui.console.append(e.getMessage() + "\n");
 		}
 	}
 	
@@ -227,7 +327,7 @@ public class FuncoesGUI {
 	 * @param matriz Matriz que armazena todos os caracteres do labirinto
 	 * @return True se o labirinto está correto, senão retorna false
 	 */
-	public boolean validaLabirinto(char[][] matriz) {
+	private boolean validaLabirinto(char[][] matriz) {
 		nLinhas = gui.editor.getLineCount();
 		
 		for (String linha : gui.editor.getText().split("\\n")) {
@@ -445,5 +545,53 @@ public class FuncoesGUI {
 		}
 		
 		return qtdAdjacentes;
+	}
+	
+	/**
+	 * Verifica se o email informado é válido
+	 * @throws Exception Se o email não for válido
+	 */
+	public void cadastraEmail() throws Exception {
+		String email = gui.editor.getText();
+		
+		if (!email.endsWith("@gmail.com") || email.length() > 60) {
+            throw new Exception ("Email Inválido");
+        }
+		
+		this.emailUsuario = email;
+		
+		gui.console.append("Email válidado, seja bem vindo " + this.emailUsuario + "\n");
+		gui.editor.setText(null);
+	}
+	
+	/**
+	 * Lista os labirintos cadastrados de um usuário
+	 */
+	public void listaLabirintos() {
+		if (this.receptor == null) {
+			System.out.println(this.receptor);
+		}
+		if (this.emailUsuario == null) {
+			gui.console.append("Cadastre seu email para acessar seus labirintos\n");
+			return;
+		}
+		
+		try {
+			PedidoListagem pedidoListagem = new PedidoListagem(this.emailUsuario);
+			
+			this.servidor.receba(pedidoListagem);
+			
+			Resultado retorno = (Resultado) this.servidor.envie();
+			String meusLabirintos = retorno.getRetorno();
+			
+			if (meusLabirintos == "") {
+				gui.console.append("Não há labirintos cadastrados nesse email.");
+			} else {
+				gui.console.append("Labirintos cadastrados:\n" + meusLabirintos);
+			}
+		} catch (Exception e) {
+			gui.console.append(e.getMessage() + "\n");
+			e.printStackTrace();
+		}
 	}
 }

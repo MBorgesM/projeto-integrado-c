@@ -1,32 +1,32 @@
 package comunicacao;
 
-import java.io.Serializable;
-import java.net.InetAddress;
-
 public class PedidoSalvamento extends Comunicado {
-    private String idCliente;
+    private String emailCliente;
     private Labirinto labirinto;
 
     /**
      * Construtor padrão da classe PedidoSalvamento
-     * @param idCliente IP do cliente
+     * @param emailCliente Email do cliente
      * @param labirinto Labirinto que será salvo
-     * @throws Exception Se o IP ou o labirinto forem nulos
+     * @throws Exception Se o email ou o labirinto forem nulos
      */
-    public PedidoSalvamento(InetAddress idCliente, Labirinto labirinto) throws Exception {
-        if (idCliente == null || labirinto == null) {
-            throw new Exception ("IP inválido");
+    public PedidoSalvamento(String emailCliente, Labirinto labirinto) throws Exception {
+        if (emailCliente == null) {
+            throw new Exception("Email inválido");
         }
-        this.idCliente = idCliente.getHostAddress();
+        if (labirinto == null) {
+        	throw new Exception("Labirinto inválido");
+        }
+        this.emailCliente = emailCliente;
         this.labirinto = labirinto;
     }
 
     /**
-     * Getter do ip do cliente
-     * @return Ip do cliente
+     * Getter do email do cliente
+     * @return email do cliente
      */
-    public String getIdCliente() {
-        return this.idCliente;
+    public String getEmailCliente() {
+        return this.emailCliente;
     }
 
     /** 
@@ -44,7 +44,7 @@ public class PedidoSalvamento extends Comunicado {
     public String toString() {
         String ret = "";
 
-        ret += "IP do Cliente: " + this.idCliente + "\n" + this.labirinto;
+        ret += "Email do Cliente: " + this.emailCliente + "\n" + this.labirinto;
 
         return ret;
     }
@@ -62,7 +62,7 @@ public class PedidoSalvamento extends Comunicado {
 
         PedidoSalvamento pedido = (PedidoSalvamento) obj;
 
-        if (!(this.idCliente.equals(pedido.idCliente))) return false;
+        if (!(this.emailCliente.equals(pedido.emailCliente))) return false;
         if (!(this.labirinto.equals(pedido.labirinto))) return false;
 
         return true;
@@ -75,7 +75,7 @@ public class PedidoSalvamento extends Comunicado {
     public int hashCode() {
         int ret = 2000;
 
-        ret = 13*ret + this.idCliente.hashCode();
+        ret = 13*ret + this.emailCliente.hashCode();
         ret = 13*ret + this.labirinto.hashCode();
 
         return ret;
@@ -91,7 +91,7 @@ public class PedidoSalvamento extends Comunicado {
             throw new Exception ("Modelo ausente");
         }
         
-        this.idCliente = modelo.idCliente;
+        this.emailCliente = modelo.emailCliente;
         this.labirinto = modelo.labirinto;
     }
 

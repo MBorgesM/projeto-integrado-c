@@ -1,24 +1,19 @@
 package comunicacao;
 
-public class PedidoLabirinto extends Comunicado {
+public class PedidoListagem extends Comunicado {
     private String emailCliente;
-    private String nomeLabirinto;
 
     /**
-     * Construtor padrão da classe PedidoLabirinto
+     * Construtor padrão da classe PedidoListagem
      * @param emailCliente Email do Cliente
      * @throws Exception Se o email estiver vazio
      */
-    public PedidoLabirinto(String emailCliente, String nomeLabirinto) throws Exception{
+    public PedidoListagem(String emailCliente) throws Exception{
         if (emailCliente == null) {
             throw new Exception ("Email inválido");
         }
         
-        if (nomeLabirinto == null) {
-        	throw new Exception ("Nome do Labirinto inválido");
-        }
         this.emailCliente = emailCliente;
-        this.nomeLabirinto = nomeLabirinto;
     }
 
     /**
@@ -28,21 +23,13 @@ public class PedidoLabirinto extends Comunicado {
     public String getEmailCliente() {
         return this.emailCliente;
     }
-    
-    /**
-     * Getter do nome do Labirinto
-     * @return nome do labirinto
-     */
-    public String getNomeLabirinto() {
-    	return this.nomeLabirinto;
-    }
 
     /**
      * Método obrigatório toString
      */
     @Override
     public String toString() {
-        return "Email do Cliente: " + this.emailCliente + "\nNome do Labirinto: " + this.nomeLabirinto;
+        return "Email do Cliente: " + this.emailCliente;
     }
 
     /**
@@ -53,12 +40,11 @@ public class PedidoLabirinto extends Comunicado {
 
         if (obj == null) return false;
 
-        if (obj.getClass() != PedidoLabirinto.class) return false;
+        if (obj.getClass() != PedidoListagem.class) return false;
 
-        PedidoLabirinto pedido = (PedidoLabirinto) obj;
+        PedidoListagem pedido = (PedidoListagem) obj;
 
         if (!(this.emailCliente.equals(pedido.emailCliente))) return false;
-        if (!(this.nomeLabirinto.equals(pedido.emailCliente))) return false;
 
         return true;
     }
@@ -71,32 +57,30 @@ public class PedidoLabirinto extends Comunicado {
         int ret = 2000;
 
         ret = 13*ret + this.emailCliente.hashCode();
-        ret = 13*ret + this.nomeLabirinto.hashCode();
 
         return ret;
     }
 
     /**
-     * Construtor de cópias da classe PedidoLabirinto
-     * @param modelo PedidoLabirinto que servirá de modelo para a cópia
+     * Construtor de cópias da classe PedidoListagem
+     * @param modelo PedidoListagem que servirá de modelo para a cópia
      * @throws Exception Se o modelo for nulo
      */
-    public PedidoLabirinto(PedidoLabirinto modelo) throws Exception {
+    public PedidoListagem(PedidoListagem modelo) throws Exception {
         if (modelo == null) {
             throw new Exception ("Modelo ausente");
         }
         this.emailCliente = modelo.emailCliente;
-        this.nomeLabirinto = modelo.nomeLabirinto;
     }
 
     /**
      * Método obrigatório clone
      */
     public Object clone() {
-        PedidoLabirinto ret=null;
+        PedidoListagem ret=null;
         
         try {
-            ret = new PedidoLabirinto(this);
+            ret = new PedidoListagem(this);
         } catch (Exception erro) {}
         
         return ret;
