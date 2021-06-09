@@ -11,7 +11,7 @@ public class BDSQLServer
     	MeuPreparedStatement comando = null;
 
     	try
-        {
+        {	
             comando =
             new MeuPreparedStatement (
             "com.microsoft.sqlserver.jdbc.SQLServerDriver",

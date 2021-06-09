@@ -102,6 +102,13 @@ public class Labirintos {
         }
     }
     
+    /**
+     * Recupera o conteúdo de um labirinto salvo
+     * @param nome Nome do labirinto 
+     * @param criador Email do criador do labirinto
+     * @return Conteúdo do labirinto
+     * @throws Exception Caso ocorra algum problema com o banco
+     */
     public static String recuperar(String nome, String criador) throws Exception {
     	String ret = "";
     	try {
@@ -125,6 +132,12 @@ public class Labirintos {
     	return ret;
     }
     
+    /**
+     * Lista todos os labirintos criados a partir de um mesmo email
+     * @param criador Email do criador
+     * @return String com todos os nomes dos labirintos
+     * @throws Exception Caso ocorra algum problema com o banco
+     */
     public static String listar(String criador) throws Exception {
     	String ret = "";
     	try {
@@ -146,6 +159,12 @@ public class Labirintos {
     	return ret;
     }
     
+    /**
+     * Deleta um labirinto a partir de seu nome e criador
+     * @param nome Nome do Labirinto
+     * @param email Email do Criador
+     * @throws Exception Caso ocorra algum problema com o banco
+     */
     public static void deletar(String nome, String email) throws Exception {
     	try {
     		String sql = "DELETE " +

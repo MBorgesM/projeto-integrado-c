@@ -20,8 +20,8 @@ public class GUI implements ActionListener {
 	public JScrollPane scrollEditor;
 	public JScrollPane scrollConsole;
 	public JButton botao[] = new JButton[8];
-	public JPanel botoes = new JPanel((LayoutManager) new FlowLayout(FlowLayout.LEFT)); 
-	FuncoesGUI funcoes = new FuncoesGUI(this);
+	public JPanel botoes = new JPanel((LayoutManager) new FlowLayout(FlowLayout.LEFT));
+	public FuncoesGUI funcoes = new FuncoesGUI(this);
 	
 	public static void main(String[] args) {
 		new GUI();
@@ -132,7 +132,7 @@ public class GUI implements ActionListener {
 				try {
 					funcoes.resolverLabirinto();
 				} catch (Exception f) {
-					this.console.append("Labirinto inválido" + "\n");
+					this.console.append("Labirinto inválido\n");
 				}
 				break;
 			case "Salvar": 
@@ -146,7 +146,9 @@ public class GUI implements ActionListener {
 				try {
 					funcoes.cadastraEmail();
 				} catch (Exception f) {
-					this.console.append(f.getMessage() + "\n");
+					if (f.getMessage() != null) {
+						this.console.append(f.getMessage() + "\n");
+					}
 				}
 				break;
 			case "Meus Labirintos":

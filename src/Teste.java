@@ -3,8 +3,8 @@ import comunicacao.*;
 
 public class Teste {
 	public static void main(String[] args) {
-		String nome = "aaaaaaa";
-		String email = "email2@gmail.com";
+		String nome = "Teste1";
+		String email = "email@gmail.com";
 		String conteudo = "###\nE S\n###";
 		
 		try {

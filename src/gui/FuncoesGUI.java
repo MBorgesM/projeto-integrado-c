@@ -8,30 +8,32 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+
+import javax.swing.JOptionPane;
+
 import comunicacao.*;
-import cliente.*;
 import entrega1.Pilha;
 
 public class FuncoesGUI {
-	GUI gui;                      		 //Objeto da Classe GUI, utilizado para alterar os atributos da janela 
-	String nomeArquivo = null;    		 //Nome do arquivo
-	String enderecoArquivo = null;       //Diretório do arquivo
-	String erro;                  		 //Mensagem de erro que é retornada no Log
-	String emailUsuario;				 //Email do usuário, será utilizado para salvar os labirintos no banco de dados
-	boolean novoLabirinto = true; 		 //Verdadeiro se o labirinto foi criado através da GUI, falso se foi aberto externamente
+	private GUI gui;                      		 //Objeto da Classe GUI, utilizado para alterar os atributos da janela 
+	private String nomeArquivo = null;    		 //Nome do arquivo
+	private String enderecoArquivo = null;       //Diretório do arquivo
+	private String erro;                  		 //Mensagem de erro que é retornada no Log
+	private String emailUsuario;				 //Email do usuário, será utilizado para salvar os labirintos no banco de dados
+	private boolean novoLabirinto = true; 		 //Verdadeiro se o labirinto foi criado através da GUI, falso se foi aberto externamente
 	//Todos os inteiros são utilizados para resolver o labirinto
-    int nLinhas;
-    int nColunas = 0;
-    int lEntrada = -1;
-    int cEntrada = -1;
-    int lSaida = -1;
-    int cSaida = -1;
-    public static final String HOST_PADRAO = "localhost";
-	public static final int PORTA_PADRAO = 3000;
-	Socket conexao = null;
-	ObjectOutputStream transmissor = null;
-	ObjectInputStream receptor = null;
-	Parceiro servidor = null;
+	private int nLinhas;
+	private int nColunas = 0;
+    private int lEntrada = -1;
+    private int cEntrada = -1;
+    private int lSaida = -1;
+    private int cSaida = -1;
+    private static final String HOST_PADRAO = "localhost";
+	private static final int PORTA_PADRAO = 3000;
+	private Socket conexao = null;
+	private ObjectOutputStream transmissor = null;
+	private ObjectInputStream receptor = null;
+	private Parceiro servidor = null;
 	
     /**
      * Construtor padrão
@@ -47,8 +49,8 @@ public class FuncoesGUI {
 	 */
 	public void iniciaConexao() throws Exception {
 		try {
-			String host = Cliente.HOST_PADRAO;
-			int porta = Cliente.PORTA_PADRAO;
+			String host = FuncoesGUI.HOST_PADRAO;
+			int porta = FuncoesGUI.PORTA_PADRAO;
 			
 			this.conexao = new Socket(host, porta);
 		} catch (Exception erro) {
@@ -95,7 +97,7 @@ public class FuncoesGUI {
 	}
 	
 	/**
-	 * Evento do botÃ£o "Editar", abre uma janela para que o usuário possa abrir um arquivo .txt e inserir seu conteúdo no editor
+	 * Evento do botão "Editar", abre uma janela para que o usuário possa abrir um arquivo .txt e inserir seu conteúdo no editor
 	 */
 	public void editarLabirintoLocal() {
 		FileDialog fd = new FileDialog(gui.janela, "Editar", FileDialog.LOAD);
@@ -138,14 +140,12 @@ public class FuncoesGUI {
 	 */
 	public void editarLabirintoOnline() {
 		if (this.emailUsuario == null) {
-			gui.console.append("Cadastre um email antes de tentar editar labirintos do banco de dados\n");
+			gui.console.append("Cadastre seu email para editar seus labirintos\n");
 			return;
 		}
 		
-		String nomeLabirinto = gui.editor.getText();
-		
-		if (nomeLabirinto.length() == 0) {
-			gui.console.append("Insira o nome exato do labirinto que você quer editar\n");
+		String nomeLabirinto = JOptionPane.showInputDialog("Informe o nome do labirinto");
+		if (nomeLabirinto == null) {
 			return;
 		}
 		
@@ -303,6 +303,9 @@ public class FuncoesGUI {
 		}
 	}
 	
+	/**
+	 * Envia ao servidor uma solicitação para salvar o labirinto no banco de dados
+	 */
 	private void salvarLabirintoOnline() {
 		String labirintoTexto = gui.editor.getText();
 		if (this.nomeArquivo.endsWith(".txt")) {
@@ -552,7 +555,7 @@ public class FuncoesGUI {
 	 * @throws Exception Se o email não for válido
 	 */
 	public void cadastraEmail() throws Exception {
-		String email = gui.editor.getText();
+		String email = JOptionPane.showInputDialog("Por favor, informe seu email");
 		
 		if (!email.endsWith("@gmail.com") || email.length() > 60) {
             throw new Exception ("Email Inválido");
@@ -561,7 +564,6 @@ public class FuncoesGUI {
 		this.emailUsuario = email;
 		
 		gui.console.append("Email válidado, seja bem vindo " + this.emailUsuario + "\n");
-		gui.editor.setText(null);
 	}
 	
 	/**
